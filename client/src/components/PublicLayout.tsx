@@ -1,4 +1,4 @@
-import { createContext, FormEvent, useContext, useEffect, useState } from 'react';
+import { createContext, FormEvent, useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { api } from '../api';
 import { defaultSettings, Settings } from '../types';
@@ -25,9 +25,30 @@ const projectLinks = [
 
 function Menu({ label, links }: { label: string; links: { to: string; label: string }[] }) {
   const [open, setOpen] = useState(false);
+  const hovered = useRef(false);
+  const desktopHover = () => window.matchMedia('(hover: hover) and (min-width: 1101px)').matches;
   return (
-    <div className={`menu ${open ? 'open' : ''}`} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
-      <button className="nav-link" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
+    <div
+      className={`menu ${open ? 'open' : ''}`}
+      onMouseEnter={() => {
+        if (!desktopHover()) return;
+        hovered.current = true;
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        if (!desktopHover()) return;
+        hovered.current = false;
+        setOpen(false);
+      }}
+    >
+      <button
+        className="nav-link"
+        aria-expanded={open}
+        onClick={() => {
+          if (hovered.current) return;
+          setOpen((value) => !value);
+        }}
+      >
         {label}
         <span aria-hidden="true">▾</span>
       </button>
