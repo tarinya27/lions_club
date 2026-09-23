@@ -24,7 +24,24 @@ const settingKeys = [
   'homeHeading',
   'homeIntro',
   'officeBearers',
+  'pastLeaders',
+  'members',
 ] as const;
+
+function readPeople(raw: string | undefined) {
+  try {
+    const parsed = JSON.parse(raw || '[]');
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((person) => person && typeof person === 'object')
+      .map((person) => ({
+        name: typeof person.name === 'string' ? person.name : '',
+        detail: typeof person.detail === 'string' ? person.detail : '',
+      }));
+  } catch {
+    return [];
+  }
+}
 
 export async function readSettings() {
   const rows = await prisma.setting.findMany();
@@ -54,6 +71,8 @@ export async function readSettings() {
     homeHeading: map.homeHeading || 'Service, close to home',
     homeIntro: map.homeIntro || '',
     officeBearers,
+    pastLeaders: readPeople(map.pastLeaders),
+    members: readPeople(map.members),
   };
 }
 

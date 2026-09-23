@@ -78,6 +78,11 @@ const bearerSchema = z.object({
   name: z.string().trim().max(120),
 });
 
+const personSchema = z.object({
+  name: z.string().trim().max(120),
+  detail: z.string().trim().max(160),
+});
+
 export const settingsSchema = z.object({
   phone: z.string().trim().max(40),
   phoneAlt: z.string().trim().max(40),
@@ -100,6 +105,8 @@ export const settingsSchema = z.object({
   homeHeading: z.string().trim().min(2).max(120),
   homeIntro: z.string().trim().min(10).max(600),
   officeBearers: z.array(bearerSchema).max(12),
+  pastLeaders: z.array(personSchema).max(60),
+  members: z.array(personSchema).max(120),
 });
 
 export const passwordSchema = z.object({

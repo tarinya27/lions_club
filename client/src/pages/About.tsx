@@ -1,47 +1,44 @@
-import { useEffect, useState } from 'react';
-import { api } from '../api';
 import { useSettings } from '../components/PublicLayout';
-import { RichText, useTitle } from '../components/ui';
-import { PageContent } from '../types';
+import { useTitle } from '../components/ui';
+import { ClubPerson } from '../types';
+
+function People({ people, empty }: { people: ClubPerson[]; empty: string }) {
+  const listed = people.filter((person) => person.name.trim());
+  if (listed.length === 0) return <p className="muted">{empty}</p>;
+  return (
+    <div className="people">
+      {listed.map((person) => (
+        <article key={`${person.name}-${person.detail}`} className="person">
+          <strong>{person.name}</strong>
+          {person.detail.trim() ? <span>{person.detail}</span> : null}
+        </article>
+      ))}
+    </div>
+  );
+}
 
 export default function AboutPage() {
   useTitle('About us');
   const settings = useSettings();
-  const [page, setPage] = useState<PageContent | null>(null);
-  const bearers = settings.officeBearers.filter((person) => person.name.trim());
-
-  useEffect(() => {
-    api<PageContent>('/api/pages/about').then(setPage).catch(() => {});
-  }, []);
 
   return (
     <>
       <header className="page-hero">
         <div className="wrap">
           <p className="kicker">About us</p>
-          <h1>{page?.title || 'About the club'}</h1>
-          <p>{page?.excerpt}</p>
+          <h1>About us</h1>
         </div>
       </header>
-      <section className="section">
-        <div className="wrap article-grid">
-          <article className="article">{page ? <RichText text={page.body} /> : <p className="muted">Loading…</p>}</article>
-          <aside className="side-card" id="bearers">
-            <p className="kicker">This Lions year</p>
-            <h2>Office bearers</h2>
-            {bearers.length === 0 ? (
-              <p>The secretary publishes this year’s board here. The Lions year runs from July to June.</p>
-            ) : (
-              <ul className="bearers">
-                {bearers.map((person) => (
-                  <li key={person.role}>
-                    <span>{person.role}</span>
-                    <strong>{person.name}</strong>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </aside>
+      <section className="section" id="past-leaders">
+        <div className="wrap">
+          <h2>Meet our Past Leaders</h2>
+          <People people={settings.pastLeaders ?? []} empty="Past leaders will be published here." />
+        </div>
+      </section>
+      <section className="section section-members" id="members">
+        <div className="wrap">
+          <h2>Meet our members</h2>
+          <People people={settings.members ?? []} empty="Members will be published here." />
         </div>
       </section>
     </>

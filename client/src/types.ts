@@ -1,4 +1,5 @@
 export type OfficeBearer = { role: string; name: string };
+export type ClubPerson = { name: string; detail: string };
 
 export type Settings = {
   phone: string;
@@ -18,6 +19,8 @@ export type Settings = {
   homeHeading: string;
   homeIntro: string;
   officeBearers: OfficeBearer[];
+  pastLeaders: ClubPerson[];
+  members: ClubPerson[];
 };
 
 export const defaultSettings: Settings = {
@@ -40,6 +43,8 @@ export const defaultSettings: Settings = {
   homeIntro:
     'Lions Club of Nugegoda brings members together to serve Nugegoda, Nawala, and the communities around them. Projects and the club newsletter are published on this site every week.',
   officeBearers: [],
+  pastLeaders: [],
+  members: [],
 };
 
 export type ProjectSummary = {

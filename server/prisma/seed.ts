@@ -19,6 +19,8 @@ const settings: Record<string, string> = {
   homeHeading: 'Service, close to home',
   homeIntro:
     'Lions Club of Nugegoda brings members together to serve Nugegoda, Nawala, and the communities around them. Projects and the club newsletter are published on this site every week.',
+  pastLeaders: JSON.stringify([]),
+  members: JSON.stringify([]),
   officeBearers: JSON.stringify([
     { role: 'President', name: '' },
     { role: 'Immediate Past President', name: '' },

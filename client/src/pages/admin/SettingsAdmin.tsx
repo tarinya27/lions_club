@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { api } from '../../api';
 import { Banner, Field } from '../../components/ui';
-import { OfficeBearer, Settings } from '../../types';
+import { ClubPerson, Settings } from '../../types';
 
 export default function SettingsAdminPage() {
   const [settings, setSettings] = useState<Settings | null>(null);
@@ -11,17 +11,29 @@ export default function SettingsAdminPage() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    api<Settings>('/api/admin/settings').then(setSettings).catch((err) => setError(err.message));
+    api<Settings>('/api/admin/settings')
+      .then((data) => setSettings({ ...data, pastLeaders: data.pastLeaders ?? [], members: data.members ?? [] }))
+      .catch((err) => setError(err.message));
   }, []);
 
   function patch(partial: Partial<Settings>) {
     setSettings((current) => (current ? { ...current, ...partial } : current));
   }
 
-  function updateBearer(index: number, partial: Partial<OfficeBearer>) {
+  function updatePerson(key: 'pastLeaders' | 'members', index: number, partial: Partial<ClubPerson>) {
     if (!settings) return;
-    const officeBearers = settings.officeBearers.map((person, personIndex) => (personIndex === index ? { ...person, ...partial } : person));
-    patch({ officeBearers });
+    const people = settings[key].map((person, personIndex) => (personIndex === index ? { ...person, ...partial } : person));
+    patch({ [key]: people });
+  }
+
+  function addPerson(key: 'pastLeaders' | 'members') {
+    if (!settings) return;
+    patch({ [key]: [...settings[key], { name: '', detail: '' }] });
+  }
+
+  function removePerson(key: 'pastLeaders' | 'members', index: number) {
+    if (!settings) return;
+    patch({ [key]: settings[key].filter((_, personIndex) => personIndex !== index) });
   }
 
   async function onSubmit(event: FormEvent) {
@@ -97,20 +109,29 @@ export default function SettingsAdminPage() {
           <Field label="Account number"><input value={settings.donationAccountNumber} onChange={(event) => patch({ donationAccountNumber: event.target.value })} /></Field>
         </div>
         <Field label="Note on the donations page"><textarea rows={3} value={settings.donationNote} onChange={(event) => patch({ donationNote: event.target.value })} /></Field>
-        <h2>Office bearers</h2>
-        {settings.officeBearers.map((person, index) => (
-          <div className="field-row" key={`${person.role}-${index}`}>
-            <Field label="Role"><input value={person.role} onChange={(event) => updateBearer(index, { role: event.target.value })} /></Field>
-            <Field label="Name"><input value={person.name} onChange={(event) => updateBearer(index, { name: event.target.value })} /></Field>
+        <h2>Meet our Past Leaders</h2>
+        <p className="muted">These names appear on About us. Add a year or office in the second field if you want it shown.</p>
+        {settings.pastLeaders.map((person, index) => (
+          <div className="field-row person-edit" key={`leader-${index}`}>
+            <Field label="Name"><input value={person.name} onChange={(event) => updatePerson('pastLeaders', index, { name: event.target.value })} /></Field>
+            <Field label="Detail">
+              <input value={person.detail} onChange={(event) => updatePerson('pastLeaders', index, { detail: event.target.value })} placeholder="President, 2019–2020" />
+            </Field>
+            <button className="text-button danger" type="button" onClick={() => removePerson('pastLeaders', index)}>Remove</button>
           </div>
         ))}
-        <button
-          className="text-button"
-          type="button"
-          onClick={() => patch({ officeBearers: [...settings.officeBearers, { role: '', name: '' }] })}
-        >
-          Add an office bearer
-        </button>
+        <button className="text-button" type="button" onClick={() => addPerson('pastLeaders')}>Add a past leader</button>
+        <h2>Meet our members</h2>
+        {settings.members.map((person, index) => (
+          <div className="field-row person-edit" key={`member-${index}`}>
+            <Field label="Name"><input value={person.name} onChange={(event) => updatePerson('members', index, { name: event.target.value })} /></Field>
+            <Field label="Detail">
+              <input value={person.detail} onChange={(event) => updatePerson('members', index, { detail: event.target.value })} />
+            </Field>
+            <button className="text-button danger" type="button" onClick={() => removePerson('members', index)}>Remove</button>
+          </div>
+        ))}
+        <button className="text-button" type="button" onClick={() => addPerson('members')}>Add a member</button>
         <div className="admin-actions">
           <button className="btn btn-navy" disabled={busy} type="submit">{busy ? 'Saving…' : 'Save settings'}</button>
         </div>

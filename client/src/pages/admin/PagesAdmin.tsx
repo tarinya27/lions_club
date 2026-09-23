@@ -4,7 +4,7 @@ import { Banner, Field } from '../../components/ui';
 import { PageContent } from '../../types';
 
 export default function PagesAdminPage() {
-  const [slug, setSlug] = useState('about');
+  const slug = 'club-house';
   const [page, setPage] = useState<PageContent | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
@@ -40,14 +40,8 @@ export default function PagesAdminPage() {
       <header className="admin-top">
         <div>
           <p className="kicker">Pages</p>
-          <h1>About and club house</h1>
+          <h1>Club house</h1>
         </div>
-        <Field label="Page">
-          <select value={slug} onChange={(event) => setSlug(event.target.value)}>
-            <option value="about">About us</option>
-            <option value="club-house">Club house</option>
-          </select>
-        </Field>
       </header>
       {error ? <Banner kind="err">{error}</Banner> : null}
       {notice ? <Banner kind="ok">{notice}</Banner> : null}

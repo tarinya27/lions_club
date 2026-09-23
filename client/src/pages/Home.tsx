@@ -52,7 +52,7 @@ export default function HomePage() {
           </aside>
         </div>
       </section>
-      <section className="section section-tight">
+      <section className="section section-causes">
         <div className="wrap">
           <div className="causes">
             {causes.map((cause) => (
@@ -101,7 +101,7 @@ export default function HomePage() {
           {data?.newsletter ? <NewsletterRow item={data.newsletter} /> : null}
         </div>
       </section>
-      <section className="section">
+      <section className="section section-visit">
         <div className="wrap visit-grid">
           <article className="visit-card">
             <p className="kicker">Club house</p>

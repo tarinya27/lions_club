@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { Link, Navigate, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { api } from '../../api';
+import { Mark } from '../../components/ui';
 import { AuthUser } from '../../types';
 
 export default function AdminLayout() {
@@ -26,8 +27,11 @@ export default function AdminLayout() {
     <div className="admin">
       <aside className="side">
         <Link to="/" className="side-brand">
-          <strong>Lions Club</strong>
-          <span>of Nugegoda</span>
+          <Mark />
+          <span>
+            <strong>Lions Club</strong>
+            <em>of Nugegoda</em>
+          </span>
         </Link>
         <p className="side-user">{user.name}</p>
         <nav>

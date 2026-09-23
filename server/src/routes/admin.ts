@@ -327,7 +327,7 @@ router.put('/settings', async (req, res) => {
   }
   const entries = Object.entries(parsed.data).map(([key, value]) => ({
     key,
-    value: key === 'officeBearers' ? JSON.stringify(value) : String(value),
+    value: key === 'officeBearers' || key === 'pastLeaders' || key === 'members' ? JSON.stringify(value) : String(value),
   }));
   await prisma.$transaction(
     entries.map((entry) =>

@@ -10,9 +10,8 @@ export function useSettings() {
 }
 
 const aboutLinks = [
-  { to: '/about', label: 'Our story' },
-  { to: '/about#bearers', label: 'Office bearers' },
-  { to: '/club-house', label: 'Club house' },
+  { to: '/about#past-leaders', label: 'Meet our Past Leaders' },
+  { to: '/about#members', label: 'Meet our members' },
 ];
 
 const projectLinks = [
@@ -23,7 +22,7 @@ const projectLinks = [
   { to: '/projects?category=Community', label: 'Community' },
 ];
 
-function Menu({ label, links }: { label: string; links: { to: string; label: string }[] }) {
+function Menu({ label, links, onNavigate }: { label: string; links: { to: string; label: string }[]; onNavigate: () => void }) {
   const [open, setOpen] = useState(false);
   const hovered = useRef(false);
   const desktopHover = () => window.matchMedia('(hover: hover) and (min-width: 1101px)').matches;
@@ -54,7 +53,7 @@ function Menu({ label, links }: { label: string; links: { to: string; label: str
       </button>
       <div className="menu-panel">
         {links.map((link) => (
-          <Link key={link.to} to={link.to} onClick={() => setOpen(false)}>
+          <Link key={link.to} to={link.to} onClick={() => { setOpen(false); onNavigate(); }}>
             {link.label}
           </Link>
         ))}
@@ -132,8 +131,8 @@ export default function PublicLayout() {
           </button>
           <nav className={`nav ${open ? 'open' : ''}`}>
             <NavLink to="/" end onClick={() => setOpen(false)}>Home</NavLink>
-            <Menu label="About us" links={aboutLinks} />
-            <Menu label="Projects" links={projectLinks} />
+            <Menu label="About us" links={aboutLinks} onNavigate={() => setOpen(false)} />
+            <Menu label="Projects" links={projectLinks} onNavigate={() => setOpen(false)} />
             <NavLink to="/club-house" onClick={() => setOpen(false)}>Club house</NavLink>
             <NavLink to="/contact" onClick={() => setOpen(false)}>Contact us</NavLink>
           </nav>
@@ -145,6 +144,7 @@ export default function PublicLayout() {
       <footer className="footer">
         <div className="wrap footer-grid">
           <div>
+            <Mark />
             <p className="footer-name">Lions Club of Nugegoda</p>
             <p>{settings.footerBlurb}</p>
           </div>

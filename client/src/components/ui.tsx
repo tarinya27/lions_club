@@ -3,11 +3,9 @@ import { api } from '../api';
 
 export function Mark() {
   return (
-    <svg className="mark" viewBox="0 0 48 48" aria-hidden="true">
-      <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" strokeWidth="1.4" />
-      <circle cx="24" cy="24" r="17.5" fill="none" stroke="currentColor" strokeWidth="0.6" />
-      <text x="24" y="29" textAnchor="middle" fontFamily="Georgia, serif" fontSize="14" fill="currentColor">LC</text>
-    </svg>
+    <span className="mark">
+      <img src="/logo.jpg" alt="" />
+    </span>
   );
 }
 

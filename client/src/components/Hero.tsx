@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Slide } from '../types';
-import { IconHeart, IconMail } from './ui';
 
 const fallback: Slide = {
   eyebrow: 'Lions Club of Nugegoda',
@@ -35,38 +34,41 @@ export default function Hero({ slides }: { slides: Slide[] }) {
 
   return (
     <section className="hero" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-      <div
-        className="hero-slide"
-        style={{ ['--slide-image' as string]: slide.imageUrl ? `url("${slide.imageUrl}")` : 'none' }}
-      >
+      <div className="wrap hero-slide" key={`${slide.title}-${index}`}>
         <div className="hero-content">
           {slide.eyebrow ? <p className="eyebrow">{slide.eyebrow}</p> : null}
           <h1>{slide.title}</h1>
           <div className="hero-actions">
-            <Link className="btn btn-blue" to={slide.primaryHref}>
-              <IconHeart /> {slide.primaryLabel}
-            </Link>
-            <Link className="btn btn-gold" to={slide.secondaryHref}>
-              <IconMail /> {slide.secondaryLabel}
-            </Link>
+            <Link className="btn btn-blue" to={slide.primaryHref}>{slide.primaryLabel}</Link>
+            <Link className="btn btn-gold" to={slide.secondaryHref}>{slide.secondaryLabel}</Link>
           </div>
+          {items.length > 1 ? (
+            <div className="hero-controls">
+              <button className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
+                ‹
+              </button>
+              <div className="hero-dots">
+                {items.map((item, dot) => (
+                  <button key={`${item.title}-${dot}`} className={dot === index ? 'on' : ''} aria-label={`Show slide ${dot + 1}`} onClick={() => setIndex(dot)} />
+                ))}
+              </div>
+              <button className="hero-arrow next" aria-label="Next slide" onClick={() => go(index + 1)}>
+                ›
+              </button>
+            </div>
+          ) : null}
+        </div>
+        <div className="hero-visual">
+          {slide.imageUrl ? (
+            <img src={slide.imageUrl} alt="" />
+          ) : (
+            <div className="hero-quiet">
+              <span>We Serve</span>
+              <p>Nugegoda · Nawala</p>
+            </div>
+          )}
         </div>
       </div>
-      {items.length > 1 ? (
-        <>
-          <button className="hero-arrow prev" aria-label="Previous slide" onClick={() => go(index - 1)}>
-            ‹
-          </button>
-          <button className="hero-arrow next" aria-label="Next slide" onClick={() => go(index + 1)}>
-            ›
-          </button>
-          <div className="hero-dots">
-            {items.map((item, dot) => (
-              <button key={`${item.title}-${dot}`} className={dot === index ? 'on' : ''} aria-label={`Show slide ${dot + 1}`} onClick={() => setIndex(dot)} />
-            ))}
-          </div>
-        </>
-      ) : null}
     </section>
   );
 }
