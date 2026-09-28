@@ -110,17 +110,7 @@ export default function SettingsAdminPage() {
         </div>
         <Field label="Note on the donations page"><textarea rows={3} value={settings.donationNote} onChange={(event) => patch({ donationNote: event.target.value })} /></Field>
         <h2>Meet our Past Leaders</h2>
-        <p className="muted">These names appear on About us. Add a year or office in the second field if you want it shown.</p>
-        {settings.pastLeaders.map((person, index) => (
-          <div className="field-row person-edit" key={`leader-${index}`}>
-            <Field label="Name"><input value={person.name} onChange={(event) => updatePerson('pastLeaders', index, { name: event.target.value })} /></Field>
-            <Field label="Detail">
-              <input value={person.detail} onChange={(event) => updatePerson('pastLeaders', index, { detail: event.target.value })} placeholder="President, 2019–2020" />
-            </Field>
-            <button className="text-button danger" type="button" onClick={() => removePerson('pastLeaders', index)}>Remove</button>
-          </div>
-        ))}
-        <button className="text-button" type="button" onClick={() => addPerson('pastLeaders')}>Add a past leader</button>
+        <p className="muted">Past presidents from 1966 to 2025 are published on the About page.</p>
         <h2>Meet our members</h2>
         {settings.members.map((person, index) => (
           <div className="field-row person-edit" key={`member-${index}`}>

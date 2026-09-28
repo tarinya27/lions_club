@@ -1,3 +1,4 @@
+import PastLeaders from '../components/PastLeaders';
 import { useSettings } from '../components/PublicLayout';
 import { useTitle } from '../components/ui';
 import { ClubPerson } from '../types';
@@ -23,18 +24,7 @@ export default function AboutPage() {
 
   return (
     <>
-      <header className="page-hero">
-        <div className="wrap">
-          <p className="kicker">About us</p>
-          <h1>About us</h1>
-        </div>
-      </header>
-      <section className="section" id="past-leaders">
-        <div className="wrap">
-          <h2>Meet our Past Leaders</h2>
-          <People people={settings.pastLeaders ?? []} empty="Past leaders will be published here." />
-        </div>
-      </section>
+      <PastLeaders />
       <section className="section section-members" id="members">
         <div className="wrap">
           <h2>Meet our members</h2>

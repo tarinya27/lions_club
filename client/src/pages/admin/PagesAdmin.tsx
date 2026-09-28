@@ -1,40 +1,6 @@
-import { FormEvent, useEffect, useState } from 'react';
-import { api } from '../../api';
-import { Banner, Field } from '../../components/ui';
-import { PageContent } from '../../types';
+import { Link } from 'react-router-dom';
 
 export default function PagesAdminPage() {
-  const slug = 'club-house';
-  const [page, setPage] = useState<PageContent | null>(null);
-  const [error, setError] = useState('');
-  const [notice, setNotice] = useState('');
-  const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    setNotice('');
-    api<PageContent>(`/api/admin/pages/${slug}`).then(setPage).catch((err) => setError(err.message));
-  }, [slug]);
-
-  async function onSubmit(event: FormEvent) {
-    event.preventDefault();
-    if (!page) return;
-    setBusy(true);
-    setError('');
-    setNotice('');
-    try {
-      const saved = await api<PageContent>(`/api/admin/pages/${slug}`, {
-        method: 'PUT',
-        body: JSON.stringify({ title: page.title, excerpt: page.excerpt, body: page.body }),
-      });
-      setPage(saved);
-      setNotice('Page saved.');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Could not save the page.');
-    } finally {
-      setBusy(false);
-    }
-  }
-
   return (
     <>
       <header className="admin-top">
@@ -43,20 +9,10 @@ export default function PagesAdminPage() {
           <h1>Club house</h1>
         </div>
       </header>
-      {error ? <Banner kind="err">{error}</Banner> : null}
-      {notice ? <Banner kind="ok">{notice}</Banner> : null}
-      {page ? (
-        <form className="panel form" onSubmit={onSubmit}>
-          <Field label="Title"><input value={page.title} onChange={(event) => setPage({ ...page, title: event.target.value })} required /></Field>
-          <Field label="Short introduction"><textarea rows={2} value={page.excerpt} onChange={(event) => setPage({ ...page, excerpt: event.target.value })} /></Field>
-          <Field label="Page text" hint="Separate paragraphs with a blank line. Start a line with ## for a heading, or - for a list.">
-            <textarea rows={16} value={page.body} onChange={(event) => setPage({ ...page, body: event.target.value })} required />
-          </Field>
-          <button className="btn btn-navy" disabled={busy} type="submit">{busy ? 'Saving…' : 'Save page'}</button>
-        </form>
-      ) : (
-        <p className="muted">Loading…</p>
-      )}
+      <section className="panel">
+        <p>The club house page shows the facilities.</p>
+        <p>Address, telephone, email, and meeting details are on the Contact page. Change them in <Link to="/admin/settings">Settings</Link>.</p>
+      </section>
     </>
   );
 }
