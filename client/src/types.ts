@@ -28,7 +28,7 @@ export const defaultSettings: Settings = {
   phoneAlt: '0772444131',
   email: 'lionsnugegoda@gmail.com',
   address: '02, School Lane, Nawala',
-  facebook: '',
+  facebook: 'https://www.facebook.com/Lionsclubnugegoda',
   meetingWhen: '',
   meetingWhere: '02, School Lane, Nawala',
   donationBank: '',

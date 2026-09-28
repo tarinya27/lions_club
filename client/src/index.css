@@ -86,6 +86,7 @@ p { margin: 0 0 0.85em; }
 .top-link, .icon-btn { display: inline-flex; align-items: center; gap: 7px; text-decoration: none; color: var(--muted); }
 .top-link:hover, .icon-btn:hover { color: var(--green); }
 .top-link svg, .icon-btn svg, .nav-toggle svg { width: 16px; height: 16px; }
+.icon-btn .icon-facebook { width: 20px; height: 20px; }
 .icon-btn {
   width: 36px;
   height: 36px;

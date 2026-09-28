@@ -46,8 +46,9 @@ export function IconPin() {
 
 export function IconFacebook() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M14 9 h2.5 V6 H14 c-2.2 0 -3.5 1.4 -3.5 3.6 V12 H8 v3 h2.5 v6 H14 v-6 h2.4 l.5 -3 H14 V9.8 c0 -.5 .2 -.8 .8 -.8z" fill="currentColor" />
+    <svg className="icon-facebook" viewBox="0 0 24 24" aria-hidden="true">
+      <path fill="#1877F2" d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H8.08v-2.91h2.36V9.84c0-2.34 1.39-3.63 3.52-3.63 1.02 0 2.09.18 2.09.18v2.3h-1.18c-1.16 0-1.52.72-1.52 1.46v1.76h2.59l-.41 2.91h-2.18V22c4.78-.76 8.44-4.92 8.44-9.94z" />
+      <path fill="#ffffff" d="M15.35 15l.41-2.91h-2.59v-1.76c0-.74.36-1.46 1.52-1.46h1.18v-2.3s-1.07-.18-2.09-.18c-2.13 0-3.52 1.29-3.52 3.63v2.07H8.08v2.91h2.36v7.03a10.1 10.1 0 0 0 3.12 0V15h2.18z" />
     </svg>
   );
 }
