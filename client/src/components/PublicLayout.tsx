@@ -170,6 +170,12 @@ export default function PublicLayout() {
         <div className="fine">
           <span>© {new Date().getFullYear()} Lions Club of Nugegoda</span>
           <span>A member club of Lions Clubs International</span>
+          <span>
+            Developed by{' '}
+            <a href="https://www.linkedin.com/in/tarinya-perera/" target="_blank" rel="noreferrer">
+              Tarinya Perera
+            </a>
+          </span>
         </div>
       </footer>
       {searchOpen ? <SearchDialog onClose={() => setSearchOpen(false)} /> : null}

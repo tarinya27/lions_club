@@ -63,7 +63,10 @@ export default function DashboardPage() {
       <div className="stat-grid">
         <article className="stat"><strong>{data.projectCount}</strong><span>Published projects</span></article>
         <article className="stat"><strong>{data.newsletterCount}</strong><span>Published newsletters</span></article>
-        <article className="stat"><strong>{data.unreadMessages}</strong><span>Unread messages</span></article>
+        <article className="stat">
+          <strong>{data.unreadMessages}</strong>
+          <Link to="/admin/messages">Unread messages</Link>
+        </article>
       </div>
       <div className="split">
         <section className="panel">

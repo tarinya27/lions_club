@@ -59,6 +59,21 @@ export default function ContactPage() {
             </form>
           )}
         </div>
+        <div className="wrap map-block">
+          <div className="map-frame">
+            <iframe
+              title="Map of Lions Club of Nugegoda"
+              src="https://maps.google.com/maps?q=6.8955153,79.8932658&z=16&output=embed"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <p>
+            <a className="text-link" href="https://maps.app.goo.gl/9xLco7KuMGEptRv5A" target="_blank" rel="noreferrer">
+              Open in Google Maps
+            </a>
+          </p>
+        </div>
       </section>
     </>
   );
