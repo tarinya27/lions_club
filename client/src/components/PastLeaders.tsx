@@ -27,7 +27,7 @@ export function PresidentCard({ presidency, index }: { presidency: Presidency; i
       style={{ animationDelay: `${Math.min(index, 8) * 45}ms` }}
     >
       <h3>{presidency.name}</h3>
-      <p className="president-role">Past President</p>
+      <p className="president-role">{presidency.terms.find((term) => term.role)?.role || 'Past President'}</p>
       <p className="president-years">
         {years.map((year) => <span key={year}>{year}</span>)}
       </p>
@@ -52,7 +52,7 @@ export default function PastLeaders() {
             <span className="legacy-line">
               <span className="legacy-caption">Leadership Legacy</span>
             </span>
-            <span>2025</span>
+            <span>{pastPresidents[pastPresidents.length - 1].end}</span>
           </div>
         </header>
         <div className="filters legacy-eras" role="group" aria-label="Presidential eras">
@@ -74,7 +74,7 @@ export default function PastLeaders() {
           ))}
         </div>
         <p className="legacy-count">
-          {pastPresidents.length} presidential years, from 1966 to 2025.
+          {pastPresidents.length} presidential years, from {pastPresidents[0].start} to {pastPresidents[pastPresidents.length - 1].end}.
         </p>
       </div>
     </section>

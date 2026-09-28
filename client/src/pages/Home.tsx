@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../api';
+import ClubHistory from '../components/ClubHistory';
 import Hero from '../components/Hero';
 import { LeadProject, NewsletterRow, ProjectCard } from '../components/Cards';
 import { useSettings } from '../components/PublicLayout';
 import { useTitle } from '../components/ui';
 import { NewsletterSummary, ProjectSummary, Slide } from '../types';
 
-const causes = [
-  { name: 'Vision', text: 'Eye care and the chance to see clearly.' },
-  { name: 'Hunger', text: 'Practical help when food is the need.' },
-  { name: 'Environment', text: 'Care for the streets and places we share.' },
-  { name: 'Youth', text: 'Time, encouragement, and support in schools.' },
-  { name: 'Health', text: 'Screenings and quiet help close to home.' },
+const purpose = [
+  {
+    name: 'Vision',
+    text: 'To empower volunteers to serve their communities, meet humanitarian needs, encourage peace and promote international understanding through Lions clubs.',
+  },
+  {
+    name: 'Mission',
+    text: 'Our mission is to empower Lions clubs, volunteers, and partners to improve health, strengthen communities, and support those in need through global humanitarian services and grants, fostering peace and international understanding.',
+  },
 ];
 
 type HomeData = {
@@ -38,33 +42,18 @@ export default function HomePage() {
   return (
     <>
       <Hero slides={data?.slides ?? []} />
-      <section className="section">
-        <div className="wrap intro">
-          <div>
-            <p className="kicker">The club</p>
-            <h2>{settings.homeHeading}</h2>
-            <p className="lede">{settings.homeIntro}</p>
-            <Link className="text-link" to="/about">About the club</Link>
-          </div>
-          <aside className="we-serve">
-            <p>We Serve</p>
-            <span>The motto of Lions Clubs International, kept locally in Nugegoda and Nawala.</span>
-          </aside>
+      <section className="section section-purpose home-flow">
+        <div className="wrap purpose-grid">
+          {purpose.map((item) => (
+            <article key={item.name} className="purpose">
+              <h2>{item.name}</h2>
+              <p>{item.text}</p>
+            </article>
+          ))}
         </div>
       </section>
-      <section className="section section-causes">
-        <div className="wrap">
-          <div className="causes">
-            {causes.map((cause) => (
-              <article key={cause.name} className="cause">
-                <h3>{cause.name}</h3>
-                <p>{cause.text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-      <section className="section">
+      <ClubHistory />
+      <section className="section home-flow">
         <div className="wrap">
           <div className="section-head">
             <div>
@@ -86,7 +75,7 @@ export default function HomePage() {
           ) : null}
         </div>
       </section>
-      <section className="section section-news">
+      <section className="section section-news home-flow">
         <div className="wrap news-feature">
           <div>
             <p className="kicker">Newsletter</p>
@@ -101,7 +90,7 @@ export default function HomePage() {
           {data?.newsletter ? <NewsletterRow item={data.newsletter} /> : null}
         </div>
       </section>
-      <section className="section section-visit">
+      <section className="section section-visit home-flow">
         <div className="wrap visit-grid">
           <article className="visit-card">
             <p className="kicker">Club house</p>

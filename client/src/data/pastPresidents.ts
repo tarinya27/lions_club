@@ -2,6 +2,7 @@ export type PastTerm = {
   start: number;
   end: number;
   name: string;
+  role?: string;
 };
 
 /**
@@ -69,6 +70,7 @@ export const pastPresidents: PastTerm[] = [
   { start: 2022, end: 2023, name: 'Ganga Prasad Dissanayake' },
   { start: 2023, end: 2024, name: 'Geethika Wickramasinghe' },
   { start: 2024, end: 2025, name: 'Lasantha Perera' },
+  { start: 2025, end: 2026, name: 'Upali De Silva', role: 'Immediate Past President' },
 ];
 
 export type Era = {
@@ -84,7 +86,7 @@ export const presidentialEras: Era[] = [
   { id: '1986', label: '1986–1995', from: 1986, to: 1995 },
   { id: '1996', label: '1996–2005', from: 1996, to: 2005 },
   { id: '2006', label: '2006–2015', from: 2006, to: 2015 },
-  { id: '2016', label: '2016–2025', from: 2016, to: 2025 },
+  { id: '2016', label: '2016–2026', from: 2016, to: 2026 },
 ];
 
 export function termsInEra(era: Era) {

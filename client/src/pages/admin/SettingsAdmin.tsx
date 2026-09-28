@@ -96,8 +96,6 @@ export default function SettingsAdminPage() {
         <Field label="Where"><input value={settings.meetingWhere} onChange={(event) => patch({ meetingWhere: event.target.value })} /></Field>
         <h2>Home page</h2>
         <Field label="Motto"><input value={settings.tagline} onChange={(event) => patch({ tagline: event.target.value })} /></Field>
-        <Field label="Heading"><input value={settings.homeHeading} onChange={(event) => patch({ homeHeading: event.target.value })} /></Field>
-        <Field label="Introduction"><textarea rows={4} value={settings.homeIntro} onChange={(event) => patch({ homeIntro: event.target.value })} /></Field>
         <Field label="Footer text"><textarea rows={3} value={settings.footerBlurb} onChange={(event) => patch({ footerBlurb: event.target.value })} /></Field>
         <h2>Donations</h2>
         <div className="field-row">
@@ -110,7 +108,7 @@ export default function SettingsAdminPage() {
         </div>
         <Field label="Note on the donations page"><textarea rows={3} value={settings.donationNote} onChange={(event) => patch({ donationNote: event.target.value })} /></Field>
         <h2>Meet our Past Leaders</h2>
-        <p className="muted">Past presidents from 1966 to 2025 are published on the About page.</p>
+        <p className="muted">Past presidents from 1966 to 2026 are published on the About page.</p>
         <h2>Meet our members</h2>
         {settings.members.map((person, index) => (
           <div className="field-row person-edit" key={`member-${index}`}>
