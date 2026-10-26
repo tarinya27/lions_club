@@ -145,15 +145,25 @@ p { margin: 0 0 0.85em; }
 .menu { position: relative; }
 .menu-panel {
   position: absolute;
-  top: calc(100% + 6px);
+  top: 100%;
   left: 0;
+  z-index: 20;
   min-width: 210px;
+  margin-top: 6px;
   padding: 8px;
   background: var(--white);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: var(--shadow);
   display: none;
+}
+.menu-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 10px;
 }
 .menu.open .menu-panel, .menu:hover .menu-panel { display: grid; }
 .menu-panel a { letter-spacing: 0; text-transform: none; font-size: 15px; font-weight: 500; border-radius: 8px; }
@@ -358,6 +368,10 @@ p { margin: 0 0 0.85em; }
 .gallery figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
 .detail-list p { display: grid; gap: 2px; padding: 14px 0; border-top: 1px solid var(--line); margin: 0; }
 .detail-list span, .footer-label { color: var(--copper); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 650; }
+.club-photos { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; margin-bottom: 22px; align-items: start; }
+.club-photos figure { margin: 0; }
+.club-photos img { width: 100%; height: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--white); }
+.club-photos figcaption { margin-top: 8px; color: var(--muted); font-size: 14px; }
 .facility-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
 .facility {
   background: var(--white);
@@ -605,7 +619,8 @@ p { margin: 0 0 0.85em; }
   }
   .nav.open { display: flex; min-height: calc(100dvh - 116px); background: var(--paper); }
   .nav a, .nav-link { font-size: 16px; padding: 12px 10px; border-radius: 10px; }
-  .menu-panel { position: static; display: none; min-width: 0; box-shadow: none; border: 0; padding: 0 0 8px 14px; background: transparent; }
+  .menu-panel { position: static; display: none; min-width: 0; margin-top: 0; box-shadow: none; border: 0; padding: 0 0 8px 14px; background: transparent; }
+  .menu-panel::before { content: none; }
   .menu:hover .menu-panel { display: none; }
   .menu.open .menu-panel { display: grid; }
   .admin-main, .panel, .side, .side nav { min-width: 0; }
@@ -638,7 +653,7 @@ p { margin: 0 0 0.85em; }
   .wrap, .narrow, .topbar-inner, .header-inner, .fine { width: min(1120px, calc(100% - 28px)); }
   .top-links a:nth-child(2) { display: none; }
   .brand strong { font-size: 18px; }
-  .purpose-grid, .project-grid, .footer-grid, .field-row, .gallery, .gallery-row, .stat-grid, .people, .facility-grid, .legacy-grid, .history-grid { grid-template-columns: 1fr; }
+  .purpose-grid, .project-grid, .footer-grid, .field-row, .gallery, .gallery-row, .stat-grid, .people, .facility-grid, .legacy-grid, .history-grid, .club-photos { grid-template-columns: 1fr; }
   .history-card:last-child { grid-column: auto; }
   .legacy-eras { flex-wrap: nowrap; overflow-x: auto; padding: 4px 2px 12px; }
   .legacy-eras button { white-space: nowrap; }

@@ -40,6 +40,16 @@ export default function ClubHousePage() {
       </header>
       <section className="section section-causes">
         <div className="wrap">
+          <div className="club-photos">
+            <figure>
+              <img src="/club-house-sign.jpg" alt="Sign for the Lions Club of Nugegoda Club House and Auditorium at 02, School Lane, Nawala" />
+              <figcaption>Club House and Auditorium</figcaption>
+            </figure>
+            <figure>
+              <img src="/caldera-hall.jpg" alt="Children seated for a gathering in Rohith Caldera Hall, with wrapped gifts in front" />
+              <figcaption>Rohith Caldera Hall</figcaption>
+            </figure>
+          </div>
           <div className="facility-grid">
             {facilities.map((facility) => (
               <article className="facility" key={facility.name}>
