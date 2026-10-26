@@ -182,7 +182,7 @@ const slides = [
   {
     eyebrow: 'Lions Club of Nugegoda',
     title: 'Helping those in need',
-    imageUrl: '',
+    imageUrl: '/caldera-hall.jpg',
     primaryLabel: 'Donations',
     primaryHref: '/donations',
     secondaryLabel: 'Newsletter',
@@ -193,7 +193,7 @@ const slides = [
   {
     eyebrow: 'Our motto',
     title: 'We serve our community',
-    imageUrl: '',
+    imageUrl: '/hero-gathering.jpg',
     primaryLabel: 'Our projects',
     primaryHref: '/projects',
     secondaryLabel: 'About the club',
@@ -204,7 +204,7 @@ const slides = [
   {
     eyebrow: 'Updated every week',
     title: 'See the work as it happens',
-    imageUrl: '',
+    imageUrl: '/hero-camp.jpg',
     primaryLabel: 'Projects',
     primaryHref: '/projects',
     secondaryLabel: 'Newsletter',
