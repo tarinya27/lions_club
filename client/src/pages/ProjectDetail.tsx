@@ -36,6 +36,8 @@ export default function ProjectDetailPage() {
   }
 
   const { project, related } = data;
+  const feature = project.coverImage || project.images[0]?.url || '';
+  const gallery = project.coverImage ? project.images : project.images.slice(1);
 
   return (
     <>
@@ -53,11 +55,11 @@ export default function ProjectDetailPage() {
       </header>
       <section className="section">
         <div className="wrap narrow">
-          {project.coverImage ? <img className="feature-photo" src={project.coverImage} alt="" /> : null}
+          {feature ? <img className="feature-photo" src={feature} alt="" /> : null}
           <RichText text={project.body} />
-          {project.images.length > 0 ? (
+          {gallery.length > 0 ? (
             <div className="gallery">
-              {project.images.map((image) => (
+              {gallery.map((image) => (
                 <figure key={image.url}>
                   <img src={image.url} alt={image.caption || ''} />
                   {image.caption ? <figcaption>{image.caption}</figcaption> : null}

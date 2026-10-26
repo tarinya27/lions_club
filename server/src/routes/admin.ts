@@ -121,6 +121,7 @@ router.post('/projects', async (req, res) => {
   const project = await prisma.project.create({
     data: {
       ...rest,
+      coverImage: rest.coverImage || images[0]?.url || '',
       slug,
       projectDate,
       images: { create: images.map((image, index) => ({ ...image, sortOrder: index })) },
@@ -151,6 +152,7 @@ router.put('/projects/:id', async (req, res) => {
     where: { id: existing.id },
     data: {
       ...rest,
+      coverImage: rest.coverImage || images[0]?.url || '',
       projectDate,
       images: {
         deleteMany: {},

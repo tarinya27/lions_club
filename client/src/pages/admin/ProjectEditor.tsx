@@ -27,7 +27,7 @@ function empty(section: 'Past' | 'Upcoming' = 'Past'): FormState {
     location: '',
     projectDate: todayKey(),
     coverImage: '',
-    status: 'draft',
+    status: 'published',
     featured: false,
     isSample: false,
     images: [],

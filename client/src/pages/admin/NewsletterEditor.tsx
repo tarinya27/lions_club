@@ -22,7 +22,7 @@ const empty = (): FormState => ({
   issueDate: todayKey(),
   coverImage: '',
   pdfUrl: '',
-  status: 'draft',
+  status: 'published',
   isSample: false,
 });
 
