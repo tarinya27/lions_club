@@ -1,8 +1,8 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api, todayKey } from '../../api';
 import { Banner, Field, Uploader } from '../../components/ui';
-import { categories, Project } from '../../types';
+import { Project, projectSection, projectSections } from '../../types';
 
 type FormState = {
   title: string;
@@ -18,25 +18,32 @@ type FormState = {
   images: { url: string; caption: string }[];
 };
 
-const empty = (): FormState => ({
-  title: '',
-  summary: '',
-  body: '',
-  category: 'Community',
-  location: '',
-  projectDate: todayKey(),
-  coverImage: '',
-  status: 'draft',
-  featured: false,
-  isSample: false,
-  images: [],
-});
+function empty(section: 'Past' | 'Upcoming' = 'Past'): FormState {
+  return {
+    title: '',
+    summary: '',
+    body: '',
+    category: section,
+    location: '',
+    projectDate: todayKey(),
+    coverImage: '',
+    status: 'draft',
+    featured: false,
+    isSample: false,
+    images: [],
+  };
+}
+
+function cardSummary(description: string) {
+  return description.replace(/^#{1,6}\s+/gm, '').replace(/\s+/g, ' ').trim().slice(0, 400);
+}
 
 export default function ProjectEditorPage() {
   const { id } = useParams();
+  const [params] = useSearchParams();
   const isNew = !id || id === 'new';
   const navigate = useNavigate();
-  const [form, setForm] = useState<FormState>(empty);
+  const [form, setForm] = useState<FormState>(() => empty(params.get('section') === 'upcoming' ? 'Upcoming' : 'Past'));
   const [slug, setSlug] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -50,7 +57,7 @@ export default function ProjectEditorPage() {
           title: project.title,
           summary: project.summary,
           body: project.body,
-          category: project.category,
+          category: projectSection(project.category),
           location: project.location,
           projectDate: project.projectDate.slice(0, 10),
           coverImage: project.coverImage,
@@ -74,7 +81,7 @@ export default function ProjectEditorPage() {
     try {
       const saved = await api<Project>(isNew ? '/api/admin/projects' : `/api/admin/projects/${id}`, {
         method: isNew ? 'POST' : 'PUT',
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, category: projectSection(form.category), summary: cardSummary(form.body) }),
       });
       navigate(`/admin/projects/${saved.id}`);
       if (!isNew) setSlug(saved.slug);
@@ -104,25 +111,19 @@ export default function ProjectEditorPage() {
         {error ? <Banner kind="err">{error}</Banner> : null}
         <Field label="Title"><input value={form.title} onChange={(event) => patch({ title: event.target.value })} required /></Field>
         <div className="field-row">
-          <Field label="Category">
-            <select value={form.category} onChange={(event) => patch({ category: event.target.value })}>
-              {categories.map((category) => <option key={category}>{category}</option>)}
+          <Field label="Section">
+            <select value={projectSection(form.category)} onChange={(event) => patch({ category: event.target.value })}>
+              {projectSections.map((section) => <option key={section.value} value={section.value}>{section.label}</option>)}
             </select>
           </Field>
-          <Field label="Date of the project"><input type="date" value={form.projectDate} onChange={(event) => patch({ projectDate: event.target.value })} required /></Field>
+          <Field label="Project date"><input type="date" value={form.projectDate} onChange={(event) => patch({ projectDate: event.target.value })} required /></Field>
         </div>
-        <Field label="Place" hint="Optional. A school, a hall, a street.">
-          <input value={form.location} onChange={(event) => patch({ location: event.target.value })} />
-        </Field>
-        <Field label="Summary" hint="One or two sentences. This shows on the project card.">
-          <textarea rows={3} value={form.summary} onChange={(event) => patch({ summary: event.target.value })} required />
-        </Field>
-        <Field label="Report" hint="Separate paragraphs with a blank line. Start a line with ## for a heading, or - for a list.">
+        <Field label="Project description" hint="This is the text visitors read. Separate paragraphs with a blank line. Start a line with ## for a heading, or - for a list.">
           <textarea rows={14} value={form.body} onChange={(event) => patch({ body: event.target.value })} required />
         </Field>
         <Uploader label="Cover photograph" accept="image/jpeg,image/png,image/webp" value={form.coverImage} onUploaded={(url) => patch({ coverImage: url })} />
         <fieldset className="gallery-edit">
-          <legend>More photographs</legend>
+          <legend>Photographs</legend>
           {form.images.map((image, index) => (
             <div key={`${image.url}-${index}`} className="gallery-row">
               <img src={image.url} alt="" />
@@ -153,7 +154,6 @@ export default function ProjectEditorPage() {
           />
         </fieldset>
         <div className="checks">
-          <label><input type="checkbox" checked={form.featured} onChange={(event) => patch({ featured: event.target.checked })} /> Feature on the home page</label>
           <label><input type="checkbox" checked={form.isSample} onChange={(event) => patch({ isSample: event.target.checked })} /> Mark as sample</label>
         </div>
         <Field label="Status">

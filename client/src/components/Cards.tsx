@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 import { formatDate } from '../api';
-import { NewsletterSummary, ProjectSummary } from '../types';
+import { NewsletterSummary, ProjectSummary, projectSection } from '../types';
 import { Cover } from './ui';
 
 export function ProjectCard({ project }: { project: ProjectSummary }) {
   return (
     <article className="project-card">
       <Link to={`/projects/${project.slug}`} className="cover">
-        <Cover src={project.coverImage} label={project.category} />
+        <Cover src={project.coverImage} label={project.title} />
       </Link>
       <div className="card-body">
         <p className="meta">
-          <span>{project.category}</span>
           <span>{formatDate(project.projectDate)}</span>
           {project.isSample ? <span className="chip-sample">Sample</span> : null}
         </p>
@@ -28,12 +27,11 @@ export function LeadProject({ project }: { project: ProjectSummary }) {
   return (
     <article className="lead-project">
       <Link to={`/projects/${project.slug}`} className="cover">
-        <Cover src={project.coverImage} label={project.category} />
+        <Cover src={project.coverImage} label={project.title} />
       </Link>
       <div>
-        <p className="kicker">Latest project</p>
+        <p className="kicker">{projectSection(project.category) === 'Upcoming' ? 'Upcoming project' : 'Past project'}</p>
         <p className="meta">
-          <span>{project.category}</span>
           <span>{formatDate(project.projectDate)}</span>
           {project.location ? <span>{project.location}</span> : null}
           {project.isSample ? <span className="chip-sample">Sample</span> : null}

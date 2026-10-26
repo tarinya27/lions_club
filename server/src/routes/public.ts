@@ -107,12 +107,18 @@ router.get('/settings', async (_req, res) => {
 });
 
 router.get('/home', async (_req, res) => {
-  const [slides, projects, newsletter] = await Promise.all([
+  const [slides, upcoming, past, newsletter] = await Promise.all([
     prisma.slide.findMany({ where: { active: true }, orderBy: { sortOrder: 'asc' } }),
     prisma.project.findMany({
-      where: { status: 'published' },
-      orderBy: [{ featured: 'desc' }, { projectDate: 'desc' }],
-      take: 4,
+      where: { status: 'published', category: 'Upcoming' },
+      orderBy: { projectDate: 'asc' },
+      take: 3,
+      select: projectListSelect,
+    }),
+    prisma.project.findMany({
+      where: { status: 'published', category: { not: 'Upcoming' } },
+      orderBy: { projectDate: 'desc' },
+      take: 3,
       select: projectListSelect,
     }),
     prisma.newsletter.findFirst({
@@ -121,7 +127,7 @@ router.get('/home', async (_req, res) => {
       select: newsletterListSelect,
     }),
   ]);
-  res.json({ slides, projects, newsletter });
+  res.json({ slides, upcoming, past, newsletter });
 });
 
 router.get('/projects', async (req, res) => {
@@ -147,8 +153,12 @@ router.get('/projects/:slug', optionalAuth, async (req, res) => {
     return;
   }
   const related = await prisma.project.findMany({
-    where: { status: 'published', slug: { not: project.slug } },
-    orderBy: { projectDate: 'desc' },
+    where: {
+      status: 'published',
+      slug: { not: project.slug },
+      ...(project.category === 'Upcoming' ? { category: 'Upcoming' } : { category: { not: 'Upcoming' } }),
+    },
+    orderBy: { projectDate: project.category === 'Upcoming' ? 'asc' : 'desc' },
     take: 3,
     select: projectListSelect,
   });

@@ -1,15 +1,6 @@
 import { z } from 'zod';
 
-export const categories = [
-  'Vision',
-  'Hunger',
-  'Environment',
-  'Youth',
-  'Health',
-  'Education',
-  'Community',
-  'Other',
-] as const;
+export const projectSections = ['Past', 'Upcoming'] as const;
 
 const dateField = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Choose a valid date.');
 
@@ -17,7 +8,7 @@ export const projectSchema = z.object({
   title: z.string().trim().min(3, 'Title should be at least 3 characters.').max(160),
   summary: z.string().trim().min(10, 'Add a short summary.').max(400),
   body: z.string().trim().min(10, 'Write the project report.').max(20000),
-  category: z.enum(categories),
+  category: z.enum(projectSections),
   location: z.string().trim().max(160).optional().default(''),
   projectDate: dateField,
   coverImage: z.string().trim().max(500).optional().default(''),

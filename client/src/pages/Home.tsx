@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { api } from '../api';
 import ClubHistory from '../components/ClubHistory';
 import Hero from '../components/Hero';
-import { LeadProject, NewsletterRow, ProjectCard } from '../components/Cards';
+import { NewsletterRow, ProjectCard } from '../components/Cards';
 import { useSettings } from '../components/PublicLayout';
 import { useTitle } from '../components/ui';
 import { NewsletterSummary, ProjectSummary, Slide } from '../types';
@@ -21,7 +21,8 @@ const purpose = [
 
 type HomeData = {
   slides: Slide[];
-  projects: ProjectSummary[];
+  upcoming: ProjectSummary[];
+  past: ProjectSummary[];
   newsletter: NewsletterSummary | null;
 };
 
@@ -35,9 +36,9 @@ export default function HomePage() {
     api<HomeData>('/api/home').then(setData).catch((err) => setError(err.message));
   }, []);
 
-  const projects = data?.projects ?? [];
-  const [lead, ...rest] = projects;
-  const samplesOnly = projects.length > 0 && projects.every((project) => project.isSample);
+  const upcoming = data?.upcoming ?? [];
+  const past = data?.past ?? [];
+  const samplesOnly = upcoming.length + past.length > 0 && [...upcoming, ...past].every((project) => project.isSample);
 
   return (
     <>
@@ -64,15 +65,28 @@ export default function HomePage() {
           </div>
           {error ? <p className="muted">{error}</p> : null}
           {samplesOnly ? <p className="sample-note">Sample reports are showing so the layout is visible. The club replaces them with the real weekly update.</p> : null}
-          {!error && data && projects.length === 0 ? <p className="muted">The next project report will appear here.</p> : null}
-          {lead ? <LeadProject project={lead} /> : null}
-          {rest.length > 0 ? (
-            <div className="project-grid">
-              {rest.map((project) => (
-                <ProjectCard key={project.id} project={project} />
-              ))}
-            </div>
-          ) : null}
+          <div className="project-group" id="upcoming">
+            <h3>Upcoming projects</h3>
+            {data && upcoming.length === 0 ? <p className="muted">Upcoming projects will be published here.</p> : null}
+            {upcoming.length > 0 ? (
+              <div className="project-grid">
+                {upcoming.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : null}
+          </div>
+          <div className="project-group" id="past">
+            <h3>Past projects</h3>
+            {data && past.length === 0 ? <p className="muted">Past projects will be published here.</p> : null}
+            {past.length > 0 ? (
+              <div className="project-grid">
+                {past.map((project) => (
+                  <ProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : null}
+          </div>
         </div>
       </section>
       <section className="section section-news home-flow">

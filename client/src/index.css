@@ -327,6 +327,9 @@ p { margin: 0 0 0.85em; }
 }
 .lead-project h3 { font-size: 34px; }
 .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.project-group + .project-group { margin-top: 42px; }
+.project-group h2 { margin-bottom: 6px; }
+#past, #upcoming { scroll-margin-top: 96px; }
 .project-card { overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s ease, box-shadow 0.25s ease; }
 .project-card .cover { border-radius: 0; }
 .project-card .cover img, .project-card .cover-fallback { min-height: 180px; aspect-ratio: 16 / 10; transition: transform 0.45s ease; }

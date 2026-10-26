@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { api, formatDate } from '../api';
 import { ProjectCard } from '../components/Cards';
 import { RichText, useTitle } from '../components/ui';
-import { Project, ProjectSummary } from '../types';
+import { Project, ProjectSummary, projectSection } from '../types';
 
 export default function ProjectDetailPage() {
   const { slug = '' } = useParams();
@@ -41,7 +41,7 @@ export default function ProjectDetailPage() {
     <>
       <header className="page-hero">
         <div className="wrap narrow">
-          <p className="kicker">{project.category}</p>
+          <p className="kicker">{projectSection(project.category) === 'Upcoming' ? 'Upcoming project' : 'Past project'}</p>
           <h1>{project.title}</h1>
           <p className="meta">
             <span>{formatDate(project.projectDate)}</span>
@@ -54,7 +54,6 @@ export default function ProjectDetailPage() {
       <section className="section">
         <div className="wrap narrow">
           {project.coverImage ? <img className="feature-photo" src={project.coverImage} alt="" /> : null}
-          <p className="lede">{project.summary}</p>
           <RichText text={project.body} />
           {project.images.length > 0 ? (
             <div className="gallery">

@@ -15,11 +15,8 @@ const aboutLinks = [
 ];
 
 const projectLinks = [
-  { to: '/projects', label: 'All projects' },
-  { to: '/projects?category=Vision', label: 'Vision' },
-  { to: '/projects?category=Youth', label: 'Youth' },
-  { to: '/projects?category=Health', label: 'Health' },
-  { to: '/projects?category=Community', label: 'Community' },
+  { to: '/projects#upcoming', label: 'Upcoming projects' },
+  { to: '/projects#past', label: 'Past projects' },
 ];
 
 function Menu({ label, links, onNavigate }: { label: string; links: { to: string; label: string }[]; onNavigate: () => void }) {

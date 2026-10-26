@@ -117,4 +117,11 @@ export type ContactMessage = {
 
 export type AuthUser = { id: string; email: string; name: string; role: string };
 
-export const categories = ['Vision', 'Hunger', 'Environment', 'Youth', 'Health', 'Education', 'Community', 'Other'] as const;
+export const projectSections = [
+  { value: 'Past', label: 'Past projects' },
+  { value: 'Upcoming', label: 'Upcoming projects' },
+] as const;
+
+export function projectSection(category: string): 'Past' | 'Upcoming' {
+  return category === 'Upcoming' ? 'Upcoming' : 'Past';
+}
