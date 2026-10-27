@@ -17,7 +17,13 @@ function People({ people, empty }: { people: ClubPerson[]; empty: string }) {
     <div className="people">
       {listed.map((person) => (
         <article key={`${person.name}-${person.detail}`} className="person">
-          <div className="person-photo" aria-hidden="true">{portraitLetters(person.name)}</div>
+          <div className="person-photo">
+            {person.photo ? (
+              <img src={person.photo} alt="" />
+            ) : (
+              <span aria-hidden="true">{portraitLetters(person.name)}</span>
+            )}
+          </div>
           <strong>{person.name}</strong>
           {person.detail.trim() ? <span>{person.detail}</span> : null}
         </article>

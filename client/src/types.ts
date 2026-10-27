@@ -1,5 +1,5 @@
 export type OfficeBearer = { role: string; name: string };
-export type ClubPerson = { name: string; detail: string };
+export type ClubPerson = { name: string; detail: string; photo?: string };
 
 export type Settings = {
   phone: string;
@@ -45,15 +45,15 @@ export const defaultSettings: Settings = {
   officeBearers: [],
   pastLeaders: [],
   members: [
-    { name: 'Lasantha Perera', detail: 'Club President' },
-    { name: 'Omar Mohammed', detail: 'Club First Vice President' },
+    { name: 'Lasantha Perera', detail: 'Club President', photo: '/officers/lasantha-perera.jpg' },
+    { name: 'Omar Mohammed', detail: 'Club First Vice President', photo: '/officers/omar-mohammed.jpg' },
     { name: 'Nipuna Gunarathne', detail: 'Club Second Vice President' },
-    { name: 'Parakrama Gunasekara', detail: 'Club Secretary' },
-    { name: 'Charith Fernando', detail: 'Club Treasurer' },
-    { name: 'Indramalie Gunaratne', detail: 'Club Marketing Chairperson' },
-    { name: 'Geethika Wickramasinghe', detail: 'Club Service Chairperson' },
-    { name: 'Sajitha De Mel', detail: 'Club Membership Chairperson' },
-    { name: 'Upali De Silva', detail: 'Club LCIF Coordinator' },
+    { name: 'Parakrama Gunasekara', detail: 'Club Secretary', photo: '/officers/parakrama-gunasekara.jpg' },
+    { name: 'Charith Fernando', detail: 'Club Treasurer', photo: '/officers/charith-fernando.jpg' },
+    { name: 'Indramalie Gunaratne', detail: 'Club Marketing Chairperson', photo: '/officers/indramalie-gunaratne.jpg' },
+    { name: 'Geethika Wickramasinghe', detail: 'Club Service Chairperson', photo: '/officers/geethika-wickramasinghe.jpg' },
+    { name: 'Sajitha De Mel', detail: 'Club Membership Chairperson', photo: '/officers/sajitha-de-mel.jpg' },
+    { name: 'Upali De Silva', detail: 'Club LCIF Coordinator', photo: '/officers/upali-de-silva.jpg' },
     { name: 'Sunil Abeysuriya', detail: '' },
     { name: 'Rohan Goonetilleke', detail: '' },
     { name: 'Duksie Goonetilleke', detail: '' },

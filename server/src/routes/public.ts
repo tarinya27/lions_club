@@ -37,6 +37,7 @@ function readPeople(raw: string | undefined) {
       .map((person) => ({
         name: typeof person.name === 'string' ? person.name : '',
         detail: typeof person.detail === 'string' ? person.detail : '',
+        photo: typeof person.photo === 'string' ? person.photo : '',
       }));
   } catch {
     return [];

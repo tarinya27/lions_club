@@ -72,6 +72,7 @@ const bearerSchema = z.object({
 const personSchema = z.object({
   name: z.string().trim().max(120),
   detail: z.string().trim().max(160),
+  photo: z.string().trim().max(300).optional().default(''),
 });
 
 export const settingsSchema = z.object({
