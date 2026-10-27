@@ -108,12 +108,12 @@ export default function SettingsAdminPage() {
         </div>
         <Field label="Note on the donations page"><textarea rows={3} value={settings.donationNote} onChange={(event) => patch({ donationNote: event.target.value })} /></Field>
         <h2>Meet our Past Leaders</h2>
-        <p className="muted">Past presidents from 1966 to 2026 are published on the About page.</p>
+        <p className="muted">Past presidents from 1966 to 2027 are published on the About page.</p>
         <h2>Meet our members</h2>
         {settings.members.map((person, index) => (
           <div className="field-row person-edit" key={`member-${index}`}>
             <Field label="Name"><input value={person.name} onChange={(event) => updatePerson('members', index, { name: event.target.value })} /></Field>
-            <Field label="Detail">
+            <Field label="Designation">
               <input value={person.detail} onChange={(event) => updatePerson('members', index, { detail: event.target.value })} />
             </Field>
             <button className="text-button danger" type="button" onClick={() => removePerson('members', index)}>Remove</button>

@@ -9,7 +9,8 @@ type Presidency = {
 function groupByName(terms: PastTerm[]): Presidency[] {
   const groups: Presidency[] = [];
   terms.forEach((term) => {
-    const existing = groups.find((group) => group.name === term.name);
+    const role = term.role || 'Past President';
+    const existing = groups.find((group) => group.name === term.name && (group.terms[0].role || 'Past President') === role);
     if (existing) {
       existing.terms.push(term);
       return;
